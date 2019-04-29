@@ -67,15 +67,18 @@ $('.cart_item').on('click', '.delete', function () {
         data: {id: id},
         type: 'GET',
         success: function (res) {
+            // console.log(typeof res);
             let total_qty = res.split(', ')[0];
             let total_sum = res.split(', ')[1];
-            if (total_qty == 0){
-                $('.content').html(res);
-            } else {
-                console.log(parent.remove());
+                if (total_qty == 0){
+                    console.log(parent.parent().parent().find($('.row')).remove());
+                    location.reload();
+                }
+                // $('.content').html(res);
+                parent.remove()
+                // console.log(parent.remove());
                 $('.menu-quantity').html('('+ res +')');
                 $(document).find($('.cart_total_sum')).html(total_sum);
-            }
         },
         error: function () {
             alert('Ошибка');
