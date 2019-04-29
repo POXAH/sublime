@@ -38,17 +38,20 @@ function clearCart(event){
 $('.cart_item').on('click', '.quantity_buttons', function () {
     let id = $(this).data('product_id');
     let oldVal = $(this).parent().find($('.quantity_input')).val();
-    // console.log(oldVal);
+    let parent = $(this).parent().parent().parent().parent()
+    // console.log(parent);
     $.ajax({
         url: '/cart/update',
         data: ({qty: oldVal, id: id}),
         type: 'GET',
         success: function (res) {
             $('.menu-quantity').html('('+ res +')');
-            $('.cart_total_value').html('('+ res +')');
-
-            // $('.content').html(res);
-            // console.log(res);
+            let price = parent.find($('.cart_item_price')).html().replace(/\s/g, '').slice(1);
+            parent.find($('.cart_item_total')).html('$'+ oldVal*price);
+            let total_sum = res.split(', ')[1];
+            $(document).find($('.cart_total_sum')).html(total_sum);
+            // $(document).find($('.cart_total_sum')).html()
+            // console.log($(document).find($('.cart_total_sum')).html(total_sum));
         },
         error: function () {
             alert('Ошибка');
@@ -58,13 +61,21 @@ $('.cart_item').on('click', '.quantity_buttons', function () {
 
 $('.cart_item').on('click', '.delete', function () {
     let id = $(this).data('id');
+    let parent = $(this).parent().parent();
     $.ajax({
         url: '/cart/delete',
         data: {id: id},
         type: 'GET',
         success: function (res) {
-            $(this).parent().parent().remove();
-            $('.menu-quantity').html('('+ res +')');
+            let total_qty = res.split(', ')[0];
+            let total_sum = res.split(', ')[1];
+            if (total_qty == 0){
+                $('.content').html(res);
+            } else {
+                console.log(parent.remove());
+                $('.menu-quantity').html('('+ res +')');
+                $(document).find($('.cart_total_sum')).html(total_sum);
+            }
         },
         error: function () {
             alert('Ошибка');
