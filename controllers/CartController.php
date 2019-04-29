@@ -57,8 +57,11 @@ class CartController extends Controller
         $session->open();
         $cart = new Cart();
         $cart->recalcCart($id);
-        return $session['cart.totalQuantity'].', $'.$session['cart.totalSum'];
-//        return $this->renderAjax('index', compact('session'));
+//        if ($session['cart.totalQuantity'] != 0){
+            return $session['cart.totalQuantity'].', $'.$session['cart.totalSum'];
+//        } else {
+//            return $this->renderPartial('index', compact('session'));
+//        }
 
     }
 
