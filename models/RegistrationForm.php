@@ -19,7 +19,6 @@ class RegistrationForm extends ActiveRecord
         return [
             [['username', 'password', 'name', 'phone', 'email'], 'required'],
             [['email'], 'email'],
-//            ['password', 'validatePassword'],
             [['name', 'last_name', 'username', 'address'], 'string', 'max' => 255],
         ];
     }
@@ -67,6 +66,5 @@ class RegistrationForm extends ActiveRecord
             ->setTo($email)
             ->setSubject('Registration')
             ->send();
-//        return $mailer;
     }
 }
