@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\models\LoginForm;
 use app\models\RegistrationForm;
 use yii\web\Controller;
 use Yii;
@@ -21,7 +22,7 @@ class RegistrationController extends Controller
             $reg->auth_token = Yii::$app->security->generateRandomString();
             if ($reg->save()){
                 $reg->sendEmailRegistration($reg->email, $reg->auth_token, $pass, $reg->username);
-                return $this->render('success', compact('reg'));
+                return $this->render('success');
             }
         }
         return $this->render('index', compact('reg'));
@@ -31,7 +32,8 @@ class RegistrationController extends Controller
     {
         $confirm = new RegistrationForm();
         if ($confirm->setEmail($auth_token)){
-            return $this->render('success');
+            $model = new LoginForm();
+            return $this->redirect('/login');
         }
     }
 }
