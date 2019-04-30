@@ -59,10 +59,13 @@ use yii\widgets\ActiveForm; ?>
                         <div class="product">
                             <div class="product_image"><a href="/product/<?=$product['link_name']?>"><img src="/images/<?=$product['img']?>" alt="<?=$product['name']?>"></a></div>
                             <? if($product['flag']){?>
-                                <div class="product_extra product_<?=strtolower($product['flag'])?>"><a href="categories.html"><?=$product['flag']?></a></div>
+                                <div class="product_extra product_<?=strtolower($product['flag'])?>"><a style="color: white;"><?=$product['flag']?></a></div>
                             <? } ?>
                             <div class="product_content">
                                 <div class="product_title"><a href="/product/<?=$product['link_name']?>"><?=$product['name']?></a></div>
+                                <? if ($product['flag'] == 'Sale'){?>
+                                    <div class="details_discount">$<?=$product['price']?></div>
+                                <?}?>
                                 <div class="product_price">$<?=$product['price']-$product['price']*$product['discount']/100?></div>
                             </div>
                         </div>

@@ -55,6 +55,7 @@ $('.cart_item').on('click', '.quantity_buttons', function () {
     })
 });
 
+
 $('.cart_item').on('click', '.delete', function () {
     let id = $(this).data('id');
     let parent = $(this).parent().parent();
