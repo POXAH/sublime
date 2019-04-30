@@ -75,7 +75,7 @@
                                         <div class="product_quantity clearfix">
                                             <span>Qty</span>
                                             <input class="quantity_input" type="text" pattern="[0-9]*"
-
+                                                   disabled="disabled"
                                                    value="<?= $product['productQuantity'];?>">
                                             <div class="quantity_buttons" data-product_id="<?=$product['id'];?>">
                                                 <div class="quantity_inc quantity_control"><i class="fa fa-chevron-up"
@@ -138,18 +138,6 @@
                                 <span class="checkmark"></span>
                                 <span class="delivery_price">Free</span>
                             </label>
-                        </div>
-                    </div>
-
-                    <!-- Coupon Code -->
-                    <div class="coupon">
-                        <div class="section_title">Coupon code</div>
-                        <div class="section_subtitle">Enter your coupon code</div>
-                        <div class="coupon_form_container">
-                            <form action="#" id="coupon_form" class="coupon_form">
-                                <input type="text" class="coupon_input" required="required">
-                                <button class="button coupon_button newsletter_button"><span>Apply</span></button>
-                            </form>
                         </div>
                     </div>
                 </div>
