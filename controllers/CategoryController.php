@@ -8,7 +8,6 @@ use app\models\Category;
 use app\models\Mailer;
 use app\models\Product;
 use Yii;
-use yii\data\Pagination;
 use yii\web\Controller;
 
 class CategoryController extends Controller
