@@ -23,7 +23,7 @@ class ProductController extends Controller
         }
         $objProducts = new Product();
         $product = $objProducts->getOneProducts($link_name);
-        $products = $objProducts->getCategoryProductsWithLimit($product->id_category, 4);
+        $products = $objProducts->getCategoryProductsWithLimitWithoutOne($product->id_category, 4, $link_name);
         return $this->render('index', compact('products', 'product', 'mailer'));
     }
 
