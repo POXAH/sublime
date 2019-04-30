@@ -43,10 +43,6 @@ class AdminController extends Controller
     {
         $this->layout = 'admin-layout';
         $model = new LoginForm();
-
-
-
-        $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $dataProvider = new ActiveDataProvider([
                 'query' => Order::find()
@@ -78,47 +74,61 @@ class AdminController extends Controller
     public function actionView($id)
     {
         $this->layout = 'admin-layout';
-
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (Yii::$app->user->identity['access'] != 'admin') {
+            return $this->goHome();
+        } else {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     public function actionCreate()
     {
         $this->layout = 'admin-layout';
+        if (Yii::$app->user->identity['access'] != 'admin') {
+            return $this->goHome();
+        } else {
+            $model = new Order();
 
-        $model = new Order();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     public function actionUpdate($id)
     {
         $this->layout = 'admin-layout';
+        if (Yii::$app->user->identity['access'] != 'admin') {
+            return $this->goHome();
+        } else {
+            $model = $this->findModel($id);
 
-        $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        if (Yii::$app->user->identity['access'] != 'admin') {
+            return $this->goHome();
+        } else {
+            $this->findModel($id)->delete();
+
+            return $this->redirect(['index']);
+        }
     }
 
     protected function findModel($id)

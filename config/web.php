@@ -82,10 +82,10 @@ $config = [
                 'registration' => 'registration/index',
                 'subscribe' => 'site/subscribe',
                 'confirmation' => 'site/confirmation',
-//                'admin/category' => 'admin-category/index',
-//                'admin/category/view' => 'admin-category/view',
-//                'admin/category/delete' => 'admin-category/delete',
-//                'admin/category/update' => 'admin-category/update',
+                'admin/category' => 'admin-category/index',
+                'admin/category/view' => 'admin-category/view',
+                'admin/category/delete' => 'admin-category/delete',
+                'admin/category/update' => 'admin-category/update',
                 'index' => 'search/index',
             ],
         ],
@@ -100,7 +100,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['*'],
     ];
 
     $config['bootstrap'][] = 'gii';

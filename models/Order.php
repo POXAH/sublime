@@ -19,6 +19,11 @@ class Order extends ActiveRecord
         return $this->hasMany( OrderInfo::class, ['id_order' => 'id']);
     }
 
+    public function getDelivery()
+    {
+        return $this->hasOne( Delivery::class, ['delivery_method' => 'id']);
+    }
+
     public function rules()
     {
         return [
@@ -34,14 +39,15 @@ class Order extends ActiveRecord
         if (!$orders){
             $orders = Order::find()
                 ->where(['id_user' => $userId])
-                ->select('id')
+                ->select(['id','delivery_method'])
                 ->asArray()
                 ->all();
             Yii::$app->cache->set('orders_'.$userId, $orders, 10);
         }
 
         foreach ($orders as $order){
-            $order_id[] = $order['id'];
+            $order_id['id'][] = $order['id'];
+            $order_id['delivery_id'][] = $order['delivery_method'];
         }
         return $order_id;
     }

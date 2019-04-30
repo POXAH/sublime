@@ -51,17 +51,19 @@ $user = Yii::$app->user->identity;
     <?
     if ($orders_id){?>
         <h1><?= Html::encode($this->title) ?></h1>
-        <?foreach ($orders_id as $order) {
+        <?foreach ($orders_id['id'] as $id => $order) {
 
         ?>
-
-            <div><?=$order?></div>
-            <? foreach ($orders_info as $info) {
-                if ($info['id_order'] == $order) {
-                    ?>
-                    <div> - "<?=$info['name']?>" в количестве <?=$info['quantity']?> шт., стоимость за единицу $<?=$info['price']?>. Общая цена $<?=$info['sum']?></div>
-                <?} ?>
-            <?} ?>
+        <div style="margin: 10px">
+            <div><b>Номер заказ №<?=$order?></b></div>
+                    <? foreach ($orders_info as $info) {
+                        if ($info['id_order'] == $order) {
+                            ?>
+                            <div> - "<?=$info['name']?>" в количестве <?=$info['quantity']?> шт., стоимость за единицу $<?=$info['price']?>. Общая цена $<?=$info['sum']?></div>
+                        <?} ?>
+                    <?} ?>
+                    <div>Доставка $<?=$delivery[$orders_id['delivery_id'][$id]-1]['price']?></div>
+        </div>
         <? }?>
     <?} else {?>
     <div class="container" id="cart">

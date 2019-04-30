@@ -123,21 +123,13 @@
                         <div class="section_title">Shipping method</div>
                         <div class="section_subtitle">Select the one you want</div>
                         <div class="delivery_options">
-                            <label class="delivery_option clearfix">Next day delivery
-                                <input type="radio" name="radio">
+                            <? foreach ($delivery as $method){?>
+                            <label class="delivery_option clearfix"><?=$method['name']?>
+                                <input type="radio" name="radio" <?if($method['id'] == $_SESSION['cart.deliveryId']){?>checked="checked" <?}?>class="delivery_radio" data-delivery_id="<?=$method['id']?>" data-delivery_price="<?=$method['price']?>">
                                 <span class="checkmark"></span>
-                                <span class="delivery_price">$4.99</span>
+                                <span class="delivery_price"><?=($method['price'] == 0) ? 'Free' : '$'.$method['price']?></span>
                             </label>
-                            <label class="delivery_option clearfix">Standard delivery
-                                <input type="radio" name="radio">
-                                <span class="checkmark"></span>
-                                <span class="delivery_price">$1.99</span>
-                            </label>
-                            <label class="delivery_option clearfix">Personal pickup
-                                <input type="radio" checked="checked" name="radio">
-                                <span class="checkmark"></span>
-                                <span class="delivery_price">Free</span>
-                            </label>
+                            <?}?>
                         </div>
                     </div>
                 </div>
@@ -150,11 +142,11 @@
                             <ul>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="cart_total_title">Subtotal</div>
-                                    <div class="cart_total_value ml-auto cart_total_sum">$<?=$_SESSION['cart.totalSum']?></div>
+                                    <div class="cart_total_value ml-auto cart_total_subsum">$<?=$_SESSION['cart.totalSum']?></div>
                                 </li>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="cart_total_title">Shipping</div>
-                                    <div class="cart_total_value ml-auto">Free</div>
+                                    <div class="cart_total_value ml-auto delivery_price">$<?=$_SESSION['cart.deliveryPrice']?></div>
                                 </li>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="cart_total_title">Total</div>

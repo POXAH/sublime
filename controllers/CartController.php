@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\models\Delivery;
 use yii\web\Controller;
 use Yii;
 use app\models\Product;
@@ -15,7 +16,9 @@ class CartController extends Controller
     {
         $session = Yii::$app->session;
         $session->open();
-        return $this->render('index', compact('session'));
+        $delivery = new Delivery();
+        $delivery = $delivery->getAllMethodDelivery();
+        return $this->render('index', compact('session', 'delivery'));
     }
 
     public function actionClear()
@@ -26,6 +29,8 @@ class CartController extends Controller
         $session->remove('name');
         $session->remove('cart.totalQuantity');
         $session->remove('cart.totalSum');
+        $session->remove('cart.deliveryPrice');
+        $session->remove('cart.deliveryId');
         return $this->renderPartial('index', compact('session'));
     }
 
@@ -44,6 +49,16 @@ class CartController extends Controller
         $session->open();
         $cart = new Cart();
         $cart->recalcCart($id);
+        return $session['cart.totalQuantity'].', $'.$session['cart.totalSum'];
+
+    }
+
+    public function actionDelivery($id)
+    {
+        $session = Yii::$app->session;
+        $session->open();
+        $cart = new Cart();
+        $cart->addDeliveryToCart($id);
         return $session['cart.totalQuantity'].', $'.$session['cart.totalSum'];
 
     }

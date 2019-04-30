@@ -156,7 +156,7 @@ $this->title = 'Checkout';
                                 </li>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="order_list_title">Shipping</div>
-                                    <div class="order_list_value ml-auto">Free</div>
+                                    <div class="order_list_value ml-auto">$<?=$_SESSION['cart.deliveryPrice'];?></div>
                                 </li>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="order_list_title">Total</div>
@@ -190,7 +190,7 @@ $this->title = 'Checkout';
 //                        var_dump($session['cart']);
 //                        echo '</pre>';?>
                         <!-- Order Text -->
-                        <div class="order_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra temp or so dales. Phasellus sagittis auctor gravida. Integ er bibendum sodales arcu id te mpus. Ut consectetur lacus.</div>
+<!--                        <div class="order_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra temp or so dales. Phasellus sagittis auctor gravida. Integ er bibendum sodales arcu id te mpus. Ut consectetur lacus.</div>-->
                         <button class="button order_button newsletter_button"><span>Place Order</span></button>
                         <? ActiveForm::end()?>
                     </div>

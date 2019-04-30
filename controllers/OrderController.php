@@ -35,7 +35,7 @@ class OrderController extends Controller
             $order->sum = $session['cart.totalSum'];
 
             if (!Yii::$app->user->isGuest) $order->id_user = Yii::$app->user->id;
-            $order->delivery_method = $post['radio'];
+            $order->delivery_method = $session['cart.deliveryId'];
             if ($order->save()){
 
                 $this->saveOrderInfo($session['cart'], $order->id);
@@ -47,6 +47,8 @@ class OrderController extends Controller
                 $session->remove('cart');
                 $session->remove('cart.totalQuantity');
                 $session->remove('cart.totalSum');
+                $session->remove('cart.deliveryPrice');
+                $session->remove('cart.deliveryId');
                 return $this->render('success',  [$type = 'order']);
             }
         }
