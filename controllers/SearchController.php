@@ -14,7 +14,7 @@ class SearchController extends Controller
 
     public function actionIndex()
     {
-        $search = Yii::$app->request->get('search');
+        $search = htmlspecialchars(Yii::$app->request->get('search'));
         $product = new Product();
         $product = $product->getSearchResult($search);
 //        $products = $product->asArray()->all();
