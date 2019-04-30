@@ -33,11 +33,7 @@ class CategoryController extends Controller
             $mailer->auth_token = Yii::$app->security->generateRandomString();
             $mailer->date_create = date('Y-m-d H:i:s');;
             if ($mailer->save()){
-                Yii::$app->mailer->compose('subscribe-mail', ['post' => $mailer])
-                    ->setFrom(['aaa@aaaa.ru' => 'errr rrrrr'])
-                    ->setTo($mailer['email'])
-                    ->setSubject('Ваш заказ принят')
-                    ->send();
+                $mailer->sendEmailSubscribe($mailer->email);
                 return $this->render('/site/success', compact('mailer'));
             }
         }
