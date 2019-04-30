@@ -72,22 +72,6 @@ class AdminController extends Controller
         return $this->render('login', [
             'model' => $model,
         ]);
-//        if(Yii::$app->user->identity['access'] == 'admin') {
-//            $dataProvider = new ActiveDataProvider([
-//                'query' => Order::find(),
-//            ]);
-//                return $this->render('index', [
-//                    'dataProvider' => $dataProvider,
-//                ]);
-//        } else if (Yii::$app->user->isGuest) {
-//            return $this->render('login',[
-//                'model' => $model,
-//            ]);
-//        } else {
-//            return $this->goHome();
-//        }
-
-
     }
 
 
