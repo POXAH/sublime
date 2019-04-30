@@ -142,10 +142,14 @@ $this->title = 'Checkout';
                                 <div class="order_list_value ml-auto">Total</div>
                             </div>
                             <ul class="order_list">
-                                <li class="d-flex flex-row align-items-center justify-content-start">
-                                    <div class="order_list_title">Cocktail Yellow dress</div>
-                                    <div class="order_list_value ml-auto">$<?=$_SESSION['cart.totalSum'];?></div>
-                                </li>
+                                <? foreach ($_SESSION['cart'] as $product) {?>
+                                    <li class="d-flex flex-row align-items-center justify-content-start">
+                                        <img src="/images/<?= $product['img'];?>" width="80px" alt="<?= $product['name'];?>">
+                                        <div class="order_list_title"><?= $product['name'];?></div>
+                                        <div class="order_list_value ml-auto">$<?=$product['price'] - $product['price'] * $product['discount'] / 100;?></div>
+                                    </li>
+
+                                <? }?>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="order_list_title">Subtotal</div>
                                     <div class="order_list_value ml-auto">$<?=$_SESSION['cart.totalSum'];?></div>
