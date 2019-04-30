@@ -4,6 +4,7 @@
 namespace app\models;
 
 
+use Yii;
 use yii\db\ActiveRecord;
 
 class Order extends ActiveRecord
@@ -29,11 +30,16 @@ class Order extends ActiveRecord
 
     public function getOrderByUser($userId)
     {
-        $orders = Order::find()
-            ->where(['id_user' => $userId])
-            ->select('id')
-            ->asArray()
-            ->all();
+        $orders = Yii::$app->cache->get('orders_'.$userId);
+        if (!$orders){
+            $orders = Order::find()
+                ->where(['id_user' => $userId])
+                ->select('id')
+                ->asArray()
+                ->all();
+            Yii::$app->cache->set('orders_'.$userId, $orders, 10);
+        }
+
         foreach ($orders as $order){
             $order_id[] = $order['id'];
         }
