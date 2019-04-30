@@ -22,7 +22,7 @@ class Mailer extends ActiveRecord
         if ($email){
             $email->is_active = 1;
             $email->save();
-            return 'OK';
+            return true;
         } else {
             return false;
         }
@@ -33,6 +33,18 @@ class Mailer extends ActiveRecord
         $this->auth_token = Yii::$app->security->generateRandomString();
         $this->save();
         return $this;
+    }
+
+    public function mailCheck($email)
+    {
+        $check = Mailer::find()
+            ->where(['email' => $email])
+            ->one();
+        if ($check){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function rules()
