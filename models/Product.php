@@ -30,7 +30,7 @@ class Product extends ActiveRecord
                 ->limit($count)
                 ->asArray()
                 ->all();
-            Yii::$app->cache->set('last_products', $products, 10);
+            Yii::$app->cache->set('last_products', $products, 60);
         }
 
         return $products;
@@ -66,9 +66,14 @@ class Product extends ActiveRecord
 
     public function getPaginationProduct($id)
     {
-        $query = Product::find()->where(['id_category' => $id]);
+        $query = Yii::$app->cache->get('pagination_query_'.$id);
+        if (!$query){
+            $query = Product::find()->where(['id_category' => $id]);
+            Yii::$app->cache->set('pagination_query_'.$id, $query, 60);
+        }
         $total = $query->count();
-        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 4, 'forcePageParam' => false, 'pageSizeParam' => false]);
+        $pages = new Pagination(['totalCount' => $total, 'pageSize' => 4, 'forcePageParam' => false, 'pageSizeParam' => false]);
+
         $products = $query
             ->offset($pages->offset)
             ->limit($pages->limit)
@@ -87,9 +92,15 @@ class Product extends ActiveRecord
                 ->orWhere(['like', 'description', $search]);
             Yii::$app->cache->set('search_'.$search, $searchResult, 60);
         }
-//            ->asArray()
-//            ->all();
-        return $searchResult;
+        $total = $searchResult->count();
+        $pages = new Pagination(['totalCount' => $total, 'pageSize' => 4]);
+        $products = $searchResult
+            ->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+        $arrResult = ['total' => $total, 'pages' => $pages, 'products' => $products];
+        return $arrResult;
     }
 
 
