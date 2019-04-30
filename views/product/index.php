@@ -124,7 +124,7 @@ use yii\widgets\ActiveForm; ?>
                             <div class="product">
                                 <div class="product_image"><a href="/product/<?=$productDetail['link_name']?>"><img src="/images/<?=$productDetail['img']?>" alt="<?=$productDetail['name']?>"></a></div>
                                 <? if($productDetail['flag']){?>
-                                    <div class="product_extra product_<?=strtolower($productDetail['flag'])?>"><a href="categories.html"><?=$productDetail['flag']?></a></div>
+                                    <div class="product_extra product_<?=strtolower($productDetail['flag'])?>"><a style="color: white;"><?=$productDetail['flag']?></a></div>
                                 <? } ?>
                                 <div class="product_content">
                                     <div class="product_title"><a href="/product/<?=$productDetail['link_name']?>"><?=$productDetail['name']?></a></div>
