@@ -18,18 +18,6 @@ class CartController extends Controller
         return $this->render('index', compact('session'));
     }
 
-//    public function actionAdd($link_name, $qty)
-//    {
-//        $product = new Product();
-//        $product = $product->getOneProducts($link_name);
-//        $session =Yii::$app->session;
-//        $session->open();
-//        $cart = new Cart();
-//        $cart = $cart->addToCart($product, $qty);
-//        return $this->render('/prodict/index', compact('link_name'));
-////        return $this->render('/product/'.$link_name);
-//    }
-
     public function actionClear()
     {
         $session = Yii::$app->session;
@@ -48,7 +36,6 @@ class CartController extends Controller
         $cart = new Cart();
         $cart->updateCart($qty, $id);
         return $session['cart.totalQuantity'].', $'.$session['cart.totalSum'];
-//        return $qty;
     }
 
     public function actionDelete($id)
@@ -57,11 +44,7 @@ class CartController extends Controller
         $session->open();
         $cart = new Cart();
         $cart->recalcCart($id);
-//        if ($session['cart.totalQuantity'] != 0){
-            return $session['cart.totalQuantity'].', $'.$session['cart.totalSum'];
-//        } else {
-//            return $this->renderPartial('index', compact('session'));
-//        }
+        return $session['cart.totalQuantity'].', $'.$session['cart.totalSum'];
 
     }
 
