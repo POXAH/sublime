@@ -50,16 +50,17 @@ class Product extends ActiveRecord
     }
 
 
-    public function getCategoryProductsWithLimit($category, $count)
+    public function getCategoryProductsWithLimitWithoutOne($category, $count, $link_name)
     {
         $products = Yii::$app->cache->get('products_limit_'.$category);
         if (!$products){
             $products = Product::find()
-                ->where(['id_category' => $category])
+                ->where(['not in', 'link_name', $link_name])
+                ->andWhere(['id_category' => $category])
                 ->limit($count)
                 ->asArray()
                 ->all();
-            Yii::$app->cache->set('products_limit_'.$category, $products, 60);
+            Yii::$app->cache->set('products_limit_'.$category, $products, 10);
         }
         return $products;
     }
