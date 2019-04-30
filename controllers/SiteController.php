@@ -57,9 +57,15 @@ class SiteController extends Controller
         $category = Category::getCategories();
         $mailer = new Mailer();
         if ($mailer->load(Yii::$app->request->post())){
-            if ($mailer->save()){
-                $mailer->sendEmailSubscribe($mailer->email);
-                return $this->render('success', compact('mailer'));
+            if($mailer->mailCheck($mailer->email))
+            {
+                if ($mailer->save()){
+                    $mailer->sendEmailSubscribe($mailer->email);
+                    return $this->render('success', compact('mailer'));
+                }
+            } else {
+
+                return $this->render('success', [$type = 'subscribe']);
             }
         }
 
@@ -76,7 +82,7 @@ class SiteController extends Controller
                 ->setTo(['crezi_23@mail.ru' => 'Administrator'])
                 ->setSubject('New message in contacts')
                 ->send();
-            return $this->render('contact', compact('contact', 'post'));
+            return $this->render('success', [$type = 'contact']);
         }
         return $this->render('contact', compact('contact'));
     }
