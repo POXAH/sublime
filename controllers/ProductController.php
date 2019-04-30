@@ -31,7 +31,7 @@ class ProductController extends Controller
     {
         $objProducts = new Product();
         $product = $objProducts->getOneProducts($link_name);
-        $products = $objProducts->getCategoryProductsWithLimit($product->id_category, 4);
+//        $products = $objProducts->getCategoryProductsWithLimit($product->id_category, 4);
         $session =Yii::$app->session;
         $session->open();
         $cart = new Cart();
