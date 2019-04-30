@@ -64,6 +64,20 @@ class Product extends ActiveRecord
         return $products;
     }
 
+    public function getPaginationProduct($id)
+    {
+        $query = Product::find()->where(['id_category' => $id]);
+        $total = $query->count();
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 4, 'forcePageParam' => false, 'pageSizeParam' => false]);
+        $products = $query
+            ->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+        $arrResult = ['total' => $total, 'pages' => $pages, 'products' => $products];
+        return $arrResult;
+    }
+
     public function getSearchResult($search)
     {
         $searchResult = Yii::$app->cache->get('search_'.$search);
