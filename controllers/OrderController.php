@@ -47,7 +47,7 @@ class OrderController extends Controller
                 $session->remove('cart');
                 $session->remove('cart.totalQuantity');
                 $session->remove('cart.totalSum');
-                return $this->render('success',  compact('order'));
+                return $this->render('success',  [$type = 'order']);
             }
         }
         return $this->render('index', compact('order'));
