@@ -37,15 +37,11 @@ class CategoryController extends Controller
                 return $this->render('/site/success', compact('mailer'));
             }
         }
-
-        $query = Product::find()->where(['id_category' => $id]);
-        $total = $query->count();
-        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 4, 'forcePageParam' => false, 'pageSizeParam' => false]);
-        $products = $query
-            ->offset($pages->offset)
-            ->limit($pages->limit)
-            ->asArray()
-            ->all();
+        $product = new Product();
+        $product = $product->getPaginationProduct($id);
+        $products = $product['products'];
+        $total = $product['total'];
+        $pages = $product['pages'];
         $category = new Category();
         $category = $category->getOneCategory($id);
         return $this->render('view', compact('products', 'category', 'mailer', 'pages', 'total'));
