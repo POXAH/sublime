@@ -29,7 +29,6 @@ class Mailer extends ActiveRecord
     }
     public function newEmail($email)
     {
-
         $this->email = $email;
         $this->auth_token = Yii::$app->security->generateRandomString();
         $this->save();
@@ -52,7 +51,6 @@ class Mailer extends ActiveRecord
             ->setTo($mailer['email'])
             ->setSubject('Confirm subscription')
             ->send();
-//        return $mailer;
     }
 
     public function sendEmailOrder($order)
@@ -62,7 +60,6 @@ class Mailer extends ActiveRecord
             ->setTo([$order['email'] => $order['name'].' '.$order['last_name']])
             ->setSubject('Ваш заказ принят')
             ->send();
-//        return $mailer;
     }
 
     public function sendEmailOrderAdmin($order)
@@ -72,7 +69,6 @@ class Mailer extends ActiveRecord
             ->setTo(['admin@poxah.ru' => 'Administator'])
             ->setSubject('Ваш заказ принят')
             ->send();
-//        return $mailer;
     }
 
 
