@@ -31,6 +31,8 @@ class CartController extends Controller
         $session->remove('cart.totalSum');
         $session->remove('cart.deliveryPrice');
         $session->remove('cart.deliveryId');
+        $session->remove('cart.totalSubSum');
+        $session->remove('cart.totalSumWithDelivery');
         return $this->renderPartial('index', compact('session'));
     }
 
@@ -40,7 +42,7 @@ class CartController extends Controller
         $session->open();
         $cart = new Cart();
         $cart->updateCart($qty, $id);
-        return $session['cart.totalQuantity'].', $'.$session['cart.totalSum'];
+        return $session['cart.totalQuantity'].', '.$session['cart.totalSum'];
     }
 
     public function actionDelete($id)
@@ -49,7 +51,8 @@ class CartController extends Controller
         $session->open();
         $cart = new Cart();
         $cart->recalcCart($id);
-        return $session['cart.totalQuantity'].', $'.$session['cart.totalSum'];
+        if (!$session['cart']) return 0;
+        return $session['cart.totalQuantity'].', '.$session['cart.totalSum'];
 
     }
 
@@ -59,7 +62,7 @@ class CartController extends Controller
         $session->open();
         $cart = new Cart();
         $cart->addDeliveryToCart($id);
-        return $session['cart.totalQuantity'].', $'.$session['cart.totalSum'];
+        return $session['cart.totalQuantity'].', '.$session['cart.totalSum'];
 
     }
 

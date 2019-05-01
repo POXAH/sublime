@@ -123,7 +123,10 @@ $this->title = 'Home';
                             <? } ?>
                             <div class="product_content">
                                 <div class="product_title"><a href="/product/<?=$product['link_name']?>"><?=$product['name']?></a></div>
-                                <div class="product_price">$<?=$product['price']?></div>
+                                <? if ($product['flag'] == 'Sale'){?>
+                                    <div class="details_discount">$<?=$product['price']?></div>
+                                <?}?>
+                                <div class="product_price">$<?=$product['price']-$product['price']*$product['discount']/100?></div>
                             </div>
                         </div>
                     <? } ?>

@@ -34,6 +34,9 @@ class Cart extends ActiveRecord
         if (empty($_SESSION['cart.deliveryId'])) {
             $_SESSION['cart.deliveryId'] = 3;
             $_SESSION['cart.deliveryPrice'] = 0;
+            $_SESSION['cart.totalSubSum'] = $_SESSION['cart.totalSum'];
+        } else {
+            $_SESSION['cart.totalSubSum'] = $_SESSION['cart.totalSum'] - $_SESSION['cart.deliveryPrice'];
         }
 }
 
@@ -46,6 +49,13 @@ class Cart extends ActiveRecord
         $_SESSION['cart.totalQuantity'] -= $quantity;
         $_SESSION['cart.totalSum'] -= $price;
         unset($_SESSION['cart'][$id]);
+        if(!$_SESSION['cart']) {
+            unset($_SESSION['cart.totalSum']);
+            unset($_SESSION['cart.totalQuantity']);
+            unset($_SESSION['cart.deliveryPrice']);
+            unset($_SESSION['cart.deliveryId']);
+            unset($_SESSION['cart.totalSubSum']);
+        }
     }
 
     public function updateCart($qty, $id)
@@ -60,13 +70,15 @@ class Cart extends ActiveRecord
             $price = $priceWithDiscount * $qty;
             $_SESSION['cart.totalQuantity'] += $qty;
             $_SESSION['cart.totalSum'] +=$price;
+            $_SESSION['cart.totalSubSum'] = $_SESSION['cart.totalSum']- $_SESSION['cart.deliveryPrice'];
     }
 
     public function addDeliveryToCart($id)
     {
         $delivery = Delivery::findOne($id);
-        $_SESSION['cart.totalSum'] +=$delivery->price - $_SESSION['cart.deliveryPrice'];
+        $_SESSION['cart.totalSum'] = $_SESSION['cart.totalSum'] + $delivery->price - $_SESSION['cart.deliveryPrice'];
         $_SESSION['cart.deliveryPrice'] = $delivery->price;
         $_SESSION['cart.deliveryId'] = $id;
+        $_SESSION['cart.totalSubSum'] = $_SESSION['cart.totalSum']- $_SESSION['cart.deliveryPrice'];
     }
 }

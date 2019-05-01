@@ -142,7 +142,7 @@
                             <ul>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="cart_total_title">Subtotal</div>
-                                    <div class="cart_total_value ml-auto cart_total_subsum">$<?=$_SESSION['cart.totalSum']?></div>
+                                    <div class="cart_total_value ml-auto cart_total_subsum">$<?=$_SESSION['cart.totalSubSum']?></div>
                                 </li>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="cart_total_title">Shipping</div>

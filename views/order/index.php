@@ -152,7 +152,7 @@ $this->title = 'Checkout';
                                 <? }?>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="order_list_title">Subtotal</div>
-                                    <div class="order_list_value ml-auto">$<?=$_SESSION['cart.totalSum'];?></div>
+                                    <div class="order_list_value ml-auto">$<?=$_SESSION['cart.totalSubSum'];?></div>
                                 </li>
                                 <li class="d-flex flex-row align-items-center justify-content-start">
                                     <div class="order_list_title">Shipping</div>
