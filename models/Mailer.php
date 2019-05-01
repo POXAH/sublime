@@ -52,6 +52,7 @@ class Mailer extends ActiveRecord
         return [
             [['email'], 'required'],
             [['email'], 'email'],
+            ['email', 'unique', 'targetClass' => User::class,  'message' => 'Подписка уже оформлена'],
         ];
     }
 

@@ -20,7 +20,7 @@ class RegistrationForm extends ActiveRecord
             [['username', 'password', 'name', 'phone', 'email'], 'required'],
             [['email'], 'email'],
             [['name', 'last_name', 'username', 'address'], 'string', 'max' => 255],
-            ['username', 'unique', 'targetClass' => User::class,  'message' => 'Этот логин уже занят'],
+            ['email', 'unique', 'targetClass' => User::class,  'message' => 'Эта почта уже зарегистрирована'],
         ];
     }
 
@@ -41,8 +41,9 @@ class RegistrationForm extends ActiveRecord
         $pass = Yii::$app->security->generateRandomString(12);
         $this->password = $this->passwordHash($pass);
         $this->auth_token = Yii::$app->security->generateRandomString();
-        $this->save();
-        $this->sendEmailRegistration($this->email, $this->auth_token, $pass, $this->username);
+        if ($this->save()){
+            $this->sendEmailRegistration($this->email, $this->auth_token, $pass, $this->username);
+        }
         return $this->id;
     }
 
