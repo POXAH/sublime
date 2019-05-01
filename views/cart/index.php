@@ -110,11 +110,6 @@
                     </div>
                 </div>
             </div>
-            <?
-//            echo"<pre>";
-//            var_dump($_SESSION);
-//            echo"</pre>";
-            ?>
             <div class="row row_extra">
                 <div class="col-lg-4">
 

@@ -198,7 +198,11 @@ $this->title = 'Home';
         </div>
     </div>
 </div>
-
+<?
+echo '<pre>';
+var_dump(Yii::$app->user->getId());
+echo '</pre>';
+?>
 <!-- Newsletter -->
 
 <div class="newsletter">

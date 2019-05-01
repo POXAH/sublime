@@ -52,8 +52,10 @@ class AdminController extends Controller
             ]);
         }
         if (!Yii::$app->user->isGuest){
-            if (Yii::$app->user->identity['access'] != 'admin') {
-                return $this->goHome();
+            if (Yii::$app->user-> identity['access'] != 'admin') {
+                return $this->render('login', [
+                    'model' => $model,
+                ]);
             } else {
                 $dataProvider = new ActiveDataProvider([
                     'query' => Order::find()
@@ -75,7 +77,7 @@ class AdminController extends Controller
     {
         $this->layout = 'admin-layout';
         if (Yii::$app->user->identity['access'] != 'admin') {
-            return $this->goHome();
+            return $this->redirect(['/admin/login']);
         } else {
             return $this->render('view', [
                 'model' => $this->findModel($id),
@@ -144,7 +146,7 @@ class AdminController extends Controller
     {
         $this->layout = 'admin-layout';
 
-        if (!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->identity['access'] == 'admin') {
             return $this->goHome();
         }
 

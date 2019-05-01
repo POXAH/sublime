@@ -20,6 +20,7 @@ class RegistrationForm extends ActiveRecord
             [['username', 'password', 'name', 'phone', 'email'], 'required'],
             [['email'], 'email'],
             [['name', 'last_name', 'username', 'address'], 'string', 'max' => 255],
+            ['username', 'unique', 'targetClass' => User::class,  'message' => 'Этот логин уже занят'],
         ];
     }
 
