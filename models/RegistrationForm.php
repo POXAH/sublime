@@ -32,19 +32,27 @@ class RegistrationForm extends ActiveRecord
 
     public function registration($userInfo)
     {
-        $this->name = $userInfo['name'];
-        $this->last_name = $userInfo['last_name'];
-        $this->address = $userInfo['address'];
-        $this->phone = $userInfo['phone'];
-        $this->email = $userInfo['email'];
-        $this->username = $userInfo['name'].'_'.Yii::$app->security->generateRandomString(10);
-        $pass = Yii::$app->security->generateRandomString(12);
-        $this->password = $this->passwordHash($pass);
-        $this->auth_token = Yii::$app->security->generateRandomString();
-        if ($this->save()){
-            $this->sendEmailRegistration($this->email, $this->auth_token, $pass, $this->username);
+        $check = RegistrationForm::find()
+            ->where(['email'=>$userInfo['email']])
+            ->one();
+        if($check){
+            return $check->id;
+        } else {
+            $this->name = $userInfo['name'];
+            $this->last_name = $userInfo['last_name'];
+            $this->address = $userInfo['address'];
+            $this->phone = $userInfo['phone'];
+            $this->email = $userInfo['email'];
+            $this->username = $userInfo['name'].'_'.Yii::$app->security->generateRandomString(10);
+            $pass = Yii::$app->security->generateRandomString(12);
+            $this->password = $this->passwordHash($pass);
+            $this->auth_token = Yii::$app->security->generateRandomString();
+            if ($this->save()){
+                $this->sendEmailRegistration($this->email, $this->auth_token, $pass, $this->username);
+            }
+            return $this->id;
         }
-        return $this->id;
+
     }
 
     public function setEmail($auth_token)
